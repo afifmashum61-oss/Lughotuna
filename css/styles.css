@@ -289,3 +289,32 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ==========================================================================
+   Print Styles for Asesmen Kurikulum Cinta Report
+   ========================================================================== */
+@media print {
+  header, footer, #hamburgerBtn, #drawerBackdrop, #drawerContent, button {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  #view-asesmen, #asesmenContainer, #asesmenPrintableReport {
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+

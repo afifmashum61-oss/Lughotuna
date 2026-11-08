@@ -63,7 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Show active view section
-    const targetView = document.getElementById(`view-${viewId}`);
+    let targetSectionId = viewId;
+    if (viewId === 'sumatif' || viewId === 'normatif') {
+      targetSectionId = 'asesmen';
+    }
+    const targetView = document.getElementById(`view-${targetSectionId}`);
     if (targetView) {
       targetView.classList.remove('hidden');
     }
@@ -133,12 +137,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Action buttons with data-target
-  document.querySelectorAll('[data-target]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  // Action buttons with data-target & global click delegation
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-target]');
+    if (btn && !btn.classList.contains('drawer-nav-item') && !btn.classList.contains('desktop-nav-item')) {
       const target = btn.getAttribute('data-target');
-      if (target) navigateTo(target);
-    });
+      if (target) {
+        e.preventDefault();
+        navigateTo(target);
+      }
+    }
   });
 
   // Section Content Render Switcher
@@ -158,6 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
         break;
       case 'latihan':
         if (window.initQuiz) window.initQuiz();
+        break;
+      case 'asesmen':
+      case 'sumatif':
+        if (window.initAsesmen) window.initAsesmen('sumatif');
+        break;
+      case 'normatif':
+        if (window.initAsesmen) window.initAsesmen('normatif');
         break;
       default:
         break;
